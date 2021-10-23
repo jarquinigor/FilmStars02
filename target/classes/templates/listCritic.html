@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+	
+		<meta charset="UTF-8"></meta>
+		<title>Críticos</title>
+		
+		<script type="text/javascript"
+				src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js">
+		</script>
+		
+		<link
+			href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+			rel="stylesheet" id="bootstrap-css">
+		</link>
+		
+		<script
+			src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js">
+		</script>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		
+	</head>
+
+	<body>
+    	<div th:replace="fragments/header :: header"></div>
+    	<div class="container">
+    	
+    		<form th:action="@{/critico/registrar}" method="post" th:object="${critic}">
+    			<div class="form-group">
+    				<label for="id">ID:</label>
+    				<input type="text" class="form-control" th:field="*{idCritic}" readonly></input>
+    				<br>
+    				<div class="form-group">
+    					<label for="nombre">NOMBRE: </label>
+    					<input type="text" class="form-control" th:field="*{nameCritic}" id="nombre"></input>
+
+						<div 	class="alert alert-danger" th:if="${#fields.hasErrors('nameCritic')}" 
+								th:errors="*{nameCritic}">
+						</div>	
+    				</div>		
+    			</div>
+    			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Grabar</button>
+   
+    		</form>
+    		
+    		<br>
+    				
+    		<form id="myform" th:action="@{/critico/buscar}" th:object="${criticbusqueda}">
+    			<div class="row clearfix">
+    				<div class="col-md-12 column">
+    				
+    					<input type="text" class="form-control" th:field="*{nameCritic}"
+							placeholder="Ingrese el nombre de un crítico para buscar"
+							id="nombre"> </input>
+    					<br>
+						<div align="left">
+							<button type="submit" class="btn btn-danger">Buscar</button>
+							<a href="/critico/listar" class="btn btn-primary">Limpiar</a>
+						</div>
+    					<br>
+    					<table class="table table-bordered table-hover table-striped" id="tab_logic">
+    						<thead>
+    							<tr>
+    								<th class="text-center">CÓDIGO</th>
+    								<th class="text-center">CRÍTICO</th>
+    								<th class="text-center">OPERACIÓN</th>
+    								<th class="text-center">OPERACIÓN</th>
+    							</tr>
+    						</thead>
+    						<tbody> 
+    							<tr th:each="c: ${listCritics}">
+    								<td align="center" th:text="${c.idCritic}"></td>
+    								<td align="center" th:text="${c.nameCritic}"></td>
+    								<td align="center"><a th:href="@{/critico/eliminar?id=}+${c.idCritic}">Eliminar</a></td>    								
+    								<td align="center"><a th:href="@{'/critico/modificar/'}+${c.idCritic}">Modificar</a></td>
+    							</tr>
+    						</tbody>
+    					</table>				
+    				</div>
+    			</div>
+    			<div th:if="${mensaje}" class="alert alert-danger">
+    				<p th:text="${mensaje}"></p>
+    			</div>
+    		</form>
+    	</div>
+    	<div th:replace="fragments/footer :: footer"></div>
+	</body>
+
+</html>

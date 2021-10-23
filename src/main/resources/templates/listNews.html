@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+	
+		<meta charset="UTF-8"></meta>
+		<title>Noticias</title>
+		
+		<script type="text/javascript"
+				src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js">
+		</script>
+		
+		<link
+			href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+			rel="stylesheet" id="bootstrap-css">
+		</link>
+		
+		<script
+			src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js">
+		</script>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		
+	</head>
+
+	<body>
+    	<div th:replace="fragments/header :: header"></div>
+    	<div class="container">
+    	
+    		<form th:action="@{/noticia/registrar}" method="post" th:object="${news}">
+    			<div class="form-group">
+    				<label for="id">ID:</label>
+    				<input type="text" class="form-control" th:field="*{idNews}" readonly></input>
+    				<br>
+    				<div class="form-group">
+    					<label for="titulo">TÍTULO: </label>
+    					<input type="text" class="form-control" th:field="*{titleNews}" id="titulo"></input>
+
+						<div 	class="alert alert-danger" th:if="${#fields.hasErrors('titleNews')}" 
+								th:errors="*{titleNews}">
+						</div>	
+    				</div>
+    				
+    				<div class="form-group">
+    					<label for="subtitulo">SUBTÍTULO: </label>
+    					<input type="text" class="form-control" th:field="*{subtitleNews}" id="subtitulo"></input>
+
+						<div 	class="alert alert-danger" th:if="${#fields.hasErrors('subtitleNews')}" 
+								th:errors="*{subtitleNews}">
+						</div>	
+    				</div>
+    				
+    				<div class="form-group">
+    					<label for="texto">TEXTO: </label>
+    					<input type="text" class="form-control" th:field="*{textNews}" id="texto"></input>
+
+						<div 	class="alert alert-danger" th:if="${#fields.hasErrors('textNews')}" 
+								th:errors="*{textNews}">
+						</div>	
+    				</div>
+    				
+    				<div class="form-group">
+    					<label for="imagen">IMAGEN: </label>
+    					<input type="text" class="form-control" th:field="*{imgNews}" id="imagen"></input>
+
+						<div 	class="alert alert-danger" th:if="${#fields.hasErrors('imgNews')}" 
+								th:errors="*{imgNews}">
+						</div>	
+    				</div>
+    				
+    				<div class="form-group">
+    					<label for="fechaNoticia">FECHA DE LA NOTICIA: </label>
+    					<input type="date" class="form-control" th:field="*{dateNews}" id="fechaNoticia"></input>
+
+						<div 	class="alert alert-danger" th:if="${#fields.hasErrors('dateNews')}" 
+								th:errors="*{dateNews}">
+						</div> 					
+    				</div>		
+    			</div>
+    			
+    			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Grabar</button> 
+    		</form>
+    		
+    		<br>
+    		
+    		<form id="myform" th:action="@{/noticia/buscar}" th:object="${newsbusqueda}">
+    			<div class="row clearfix">
+    				<div class="col-md-12 column">
+    				
+    					<input type="text" class="form-control" th:field="*{titleNews}"
+							placeholder="Ingrese el título de una noticia para buscar"
+							id="titulo"> </input>
+    					<br>
+						<div align="left">
+							<button type="submit" class="btn btn-danger">Buscar</button>
+							<a href="/noticia/listar" class="btn btn-primary">Limpiar</a>
+						</div>
+    					<br>
+    					<table class="table table-bordered table-hover table-striped" id="tab_logic">
+    						<thead>
+    							<tr>
+    								<th class="text-center">CÓDIGO</th>
+    								<th class="text-center">TÍTULO</th>
+    								<th class="text-center">SUBTÍTULO</th>
+    								<th class="text-center">TEXTO</th>
+    								<th class="text-center">IMAGEN</th>
+    								<th class="text-center">FECHA</th>
+    								<th class="text-center">OPERACIÓN</th>
+    								<th class="text-center">OPERACIÓN</th>
+    							</tr>
+    						</thead>
+    						<tbody> 
+    							<tr th:each="n: ${listNews}">
+    								<td align="center" th:text="${n.idNews}"></td>
+    								<td align="center" th:text="${n.titleNews}"></td>
+    								<td align="center" th:text="${n.subtitleNews}"></td>
+    								<td align="center" th:text="${n.textNews}"></td>
+    								<td align="center"><img th:src="${n.imgNews}" width="50" height="50" alt="logo" align="middle"></img></td>
+    								<td align="center" th:text="${#dates.format(n.dateNews, 'dd/MM/yyyy')}"></td>
+    								<td align="center"><a th:href="@{/noticia/eliminar?id=}+${n.idNews}">Eliminar</a></td>					
+    								<td align="center"><a th:href="@{'/noticia/modificar/'}+${n.idNews}">Modificar</a></td>
+    							</tr>
+    						</tbody>
+    					</table>				
+    				</div>
+    			</div>
+    			<div th:if="${mensaje}" class="alert alert-danger">
+    				<p th:text="${mensaje}"></p>
+    			</div>
+    		</form>
+    	</div>
+    	<div th:replace="fragments/footer :: footer"></div>
+	</body>
+
+</html>
