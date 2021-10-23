@@ -10,14 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "Users")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idRace;
+	private int idUser;
 	
 	@Column(name="nameUser", nullable=false, length=60)
 	private String nameUser;
@@ -32,20 +32,20 @@ public class User implements Serializable {
 		super();
 	}
 
-	public User(int idRace, String nameUser, String emailUser, String passwordUser) {
+	public User(int idUser, String nameUser, String emailUser, String passwordUser) {
 		super();
-		this.idRace = idRace;
+		this.idUser = idUser;
 		this.nameUser = nameUser;
 		this.emailUser = emailUser;
 		this.passwordUser = passwordUser;
 	}
 
-	public int getIdRace() {
-		return idRace;
+	public int getIdUser() {
+		return idUser;
 	}
 
-	public void setIdRace(int idRace) {
-		this.idRace = idRace;
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
 	}
 
 	public String getNameUser() {

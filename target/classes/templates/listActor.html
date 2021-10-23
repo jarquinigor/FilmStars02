@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+	
+		<meta charset="UTF-8"></meta>
+		<title>Actores</title>
+		
+		<script type="text/javascript"
+				src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.js">
+		</script>
+		
+		<link
+			href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+			rel="stylesheet" id="bootstrap-css">
+		</link>
+		
+		<script
+			src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js">
+		</script>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		
+	</head>
+
+	<body>
+    	<div th:replace="fragments/header :: header"></div>
+    	<div class="container">
+    	
+    		<form th:action="@{/actor/registrar}" method="post" th:object="${actor}">
+    			<div class="form-group">
+    				<label for="idpet">ID:</label>
+    				<input type="text" class="form-control" th:field="*{idActor}" readonly></input>
+    				
+    				<div class="form-group">
+    					<label for="nombre">NOMBRE:</label>
+    					<input type="text" class="form-control" th:field="*{nameActor}" id="nombre"></input>
+
+						<div 	class="alert alert-danger" th:if="${#fields.hasErrors('nameActor')}" 
+								th:errors="*{nameActor}">
+						</div>	
+    				</div>
+    				
+    				<div class="form-group">
+    					<label for="nombre">IMAGEN</label>
+    					<input type="text" class="form-control" th:field="*{imgActor}" id="fechaNacimiento"></input>
+
+						<div 	class="alert alert-danger" th:if="${#fields.hasErrors('imgActor')}" 
+								th:errors="*{imgActor}">
+						</div>	
+    				</div>			
+    			</div>
+    			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Grabar</button>
+   
+    		</form>
+    		
+    		<br>
+    		
+    		
+    		<form id="myform" th:action="@{/actor/buscar}" th:object="${actorbusqueda}">
+    			<div class="row clearfix">
+    				<div class="col-md-12 column">
+    				
+    					<input type="text" class="form-control" th:field="*{nameActor}"
+							placeholder="Ingrese un nombre de actor para buscar"
+							id="nombre"> </input>
+    					
+						<div align="left">
+							<button type="submit" class="btn btn-danger">Buscar</button>
+							<a href="/actor/listar" class="btn btn-primary">Limpiar</a>
+						</div>
+    					
+    					<table class="table table-bordered table-hover table-striped" id="tab_logic">
+    						<thead>
+    							<tr>
+    								<th class="text-center">CODIGO</th>
+    								<th class="text-center">ACTOR</th>
+    								<th class="text-center">IMAGEN</th>
+    								<th class="text-center">OPERACION</th>
+    								<th class="text-center">OPERACION</th>
+    							</tr>
+    						</thead>
+    						<tbody> 
+    							<tr th:each="a: ${listActors}">
+    								<td th:text="${a.idActor}"></td>
+    								<td th:text="${a.nameActor}"></td>
+    								<td>
+    								<img th:src="${a.imgActor}" width="50" height="50" alt="logo" align="middle"></img></td>
+    								<td><a th:href="@{/actor/eliminar?id=}+${a.idActor}">Eliminar</a></td>    								
+    								<td><a th:href="@{'/actor/modificar/'}+${a.idActor}">Modificar</a></td>
+    							</tr>
+    						</tbody>
+    					</table> 
+    					
+    				</div>
+    			</div>
+    			<div th:if="${mensaje}" class="alert alert-danger">
+    				<p th:text="${mensaje}"></p>
+    			</div>
+    		</form>
+    	</div>
+    	<div th:replace="fragments/footer :: footer"></div>
+	</body>
+
+</html>
