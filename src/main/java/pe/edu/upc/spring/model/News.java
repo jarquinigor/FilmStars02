@@ -38,11 +38,12 @@ public class News implements Serializable {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="dateNews")
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date dateNews;
 
 	public News() {
 		super();
+		dateNews = new Date();
 	}
 
 	public News(int idNews, String titleNews, String subtitleNews, String textNews, String imgNews, Date dateNews) {

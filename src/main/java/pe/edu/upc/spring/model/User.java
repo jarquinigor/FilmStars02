@@ -27,17 +27,21 @@ public class User implements Serializable {
 	
 	@Column(name="passwordUser", nullable=false, length=30)
 	private String passwordUser;
+	
+	@Column(name="passwordRepeatUser", nullable=false, length=30)
+	private String passwordRepeatUser;
 
 	public User() {
 		super();
 	}
 
-	public User(int idUser, String nameUser, String emailUser, String passwordUser) {
+	public User(int idUser, String nameUser, String emailUser, String passwordUser, String passwordRepeatUser) {
 		super();
 		this.idUser = idUser;
 		this.nameUser = nameUser;
 		this.emailUser = emailUser;
 		this.passwordUser = passwordUser;
+		this.passwordRepeatUser = passwordRepeatUser;
 	}
 
 	public int getIdUser() {
@@ -70,5 +74,13 @@ public class User implements Serializable {
 
 	public void setPasswordUser(String passwordUser) {
 		this.passwordUser = passwordUser;
+	}
+
+	public String getPasswordRepeatUser() {
+		return passwordRepeatUser;
+	}
+
+	public void setPasswordRepeatUser(String passwordRepeatUser) {
+		this.passwordRepeatUser = passwordRepeatUser;
 	}
 }

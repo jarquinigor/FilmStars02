@@ -11,6 +11,6 @@ import pe.edu.upc.spring.model.Director;
 
 @Repository
 public interface IDirectorRepository extends JpaRepository<Director, Integer> {
-	@Query("from Director d where d.nameDirector like %:nameDirector%")
+	@Query("from Director d where d.nameDirector like %:nameDirector% order by d.idDirector ASC")
 	List<Director> findByName(@Param("nameDirector") String nameDirector);
 }

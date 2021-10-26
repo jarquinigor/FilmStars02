@@ -53,7 +53,7 @@ public class ActorController {
 			if(flag)
 				return "redirect:/actor/listar";
 			else {
-				model.addAttribute("mensaje", "Rochezaso");
+				model.addAttribute("mensaje", "Ocurrio un rochezaso, LUZ ROJA");
 				return "redirect:/actor/irRegistrar";
 			}
 		}
@@ -65,7 +65,7 @@ public class ActorController {
 	{
 		Optional<Actor> objActor = aService.findById(id);
 		if (objActor == null) {
-			objRedir.addFlashAttribute("mensaje", "Rochezaso");
+			objRedir.addFlashAttribute("mensaje", "Ocurrio un roche, LUZ ROJA");
 			return "redirect:/actor/listar";
 		}
 		else {
@@ -89,6 +89,8 @@ public class ActorController {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
 			model.put("listActors", aService.findAll());
+			model.put("actor", new Actor());
+			model.put("actorbusqueda", new Actor());
 		}
 		return "listActor";
 	}

@@ -11,6 +11,6 @@ import pe.edu.upc.spring.model.Genre;
 
 @Repository
 public interface IGenreRepository extends JpaRepository<Genre, Integer> {
-	@Query("from Genre g where g.nameGenre like %:nameGenre%")
+	@Query("from Genre g where g.nameGenre like %:nameGenre% order by g.idGenre ASC")
 	List<Genre> findByName(@Param("nameGenre") String nameGenre);
 }

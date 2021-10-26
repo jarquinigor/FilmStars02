@@ -57,4 +57,10 @@ public class UserServiceImpl implements IUserService {
 	public List<User> findByName(String nameUser) {
 		return dUser.findByName(nameUser);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<User> findByEmail(String emailUser) {
+		return dUser.findByEmail(emailUser);
+	}
 }

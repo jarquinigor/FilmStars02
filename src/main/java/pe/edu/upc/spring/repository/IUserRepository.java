@@ -11,6 +11,9 @@ import pe.edu.upc.spring.model.User;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, Integer> {
-	@Query("from User u where u.nameUser like %:nameUser%")
+	@Query("from User u where u.nameUser like %:nameUser% order by u.idUser ASC")
 	List<User> findByName(@Param("nameUser") String nameUser);
+	
+	@Query("from User u where u.emailUser = :emailUser")
+	List<User> findByEmail(@Param("emailUser") String emailUser); //Devuelve un usuario (OJO)
 }

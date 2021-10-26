@@ -12,4 +12,5 @@ public interface IUserService {
 	public List<User> findAllSortAsc();
 	public Optional<User>findById(int idUser);
 	public List<User> findByName(String nameUser);
+	public List<User> findByEmail(String emailUser);
 }
