@@ -60,7 +60,7 @@ public class LoginController {
 			//AÑADIREMOS ROLES
 			List<Role>roles = new ArrayList<Role>();
 			Role role = new Role();
-			role.setAuthority("ROLE_USER");
+			role.setAuthority("ROLE_ADMIN");
 			roles.add(role);
 			objUser.setRoles(roles);
 			
