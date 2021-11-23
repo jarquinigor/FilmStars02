@@ -76,7 +76,7 @@ body {
 	<div th:replace="fragments/headerAdmin :: header"></div>
 	<div class="container">
 
-		<form th:action="@{/actor/registrar(idPath=${path})}" method="post"
+		<form th:action="@{/actor/registrar(idPath=${idPath})}" method="post"
 			th:object="${actor}">
 			<div class="form-group">
 				<label for="idpet">ID:</label> <input type="text"
