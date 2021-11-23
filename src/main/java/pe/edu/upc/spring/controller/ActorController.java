@@ -28,7 +28,7 @@ public class ActorController {
 	private IActorService aService;
 	
 	@RequestMapping("/registrar")
-	public String register(@Valid @ModelAttribute("actor") Actor actor, @RequestParam("idPath") Integer idPath, BindingResult binRes, Model model) 
+	public String register(@Valid @ModelAttribute("actor") Actor actor, BindingResult binRes, Model model) 
 		throws Exception
 	{
 		if (binRes.hasErrors()){
@@ -37,35 +37,21 @@ public class ActorController {
 			return "listActor";
 		}	
 		else {
-			if(idPath == 1) {
-				int rpta = aService.save(actor);
-				if(rpta > 0) {
-					model.addAttribute("idPath", 1);
-					model.addAttribute("mensaje", "Ya existe este actor");
-					model.addAttribute("listActors", aService.findAllSortIdAsc());
-					model.addAttribute("actor",new Actor());
-					model.addAttribute("actorbusqueda", new Actor()); 
-					return "listActor";
-				}		
-				else {
-					model.addAttribute("idPath", 1);
-					model.addAttribute("mensaje", "Se registro un actor correctamente");
-					model.addAttribute("listActors", aService.findAllSortIdAsc());
-					model.addAttribute("actor",new Actor());
-					model.addAttribute("actorbusqueda", new Actor()); 
-					return "listActor";
-				}
-			}
+			int rpta = aService.save(actor);
+			if(rpta > 0) {
+				model.addAttribute("mensaje", "Ya existe este actor");
+				model.addAttribute("listActors", aService.findAllSortIdAsc());
+				model.addAttribute("actor",new Actor());
+				model.addAttribute("actorbusqueda", new Actor()); 
+				return "listActor";
+			}		
 			else {
-				aService.update(actor);
-				model.addAttribute("idPath", 1);
-				model.addAttribute("mensaje", "Se actualizó un actor correctamente");
+				model.addAttribute("mensaje", "Se registro un actor correctamente");
 				model.addAttribute("listActors", aService.findAllSortIdAsc());
 				model.addAttribute("actor",new Actor());
 				model.addAttribute("actorbusqueda", new Actor()); 
 				return "listActor";
 			}
-			
 		}
 	}
 	
@@ -82,7 +68,6 @@ public class ActorController {
 			model.addAttribute("actor", objActor);
 			model.addAttribute("actorbusqueda", new Actor());
 			model.addAttribute("listActors",aService.findAllSortIdAsc());
-			model.addAttribute("idPath", 2);
 			return "listActor";                   
 		}
 	}
@@ -108,7 +93,6 @@ public class ActorController {
 	
 	@RequestMapping("/listar")
 	public String list(Map<String, Object> model) {
-		model.put("idPath", 1);
 		model.put("listActors", aService.findAllSortIdAsc());
 		model.put("actor",new Actor());
 		model.put("actorbusqueda", new Actor()); 
