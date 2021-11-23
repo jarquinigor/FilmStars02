@@ -131,15 +131,15 @@ public class NewsController {
 	@RequestMapping("/verNoticia")
 	public String movieUser(Model model, @RequestParam(value = "id") Integer id,
 			@RequestParam(value = "idUser") Integer idUser) {
-		// 1. IDENTIFICAR SI ES DUEÑO DEL COMENTARIO (SI ES DUEÑO, NO SE REGISTRA)
-		// 2. SI NO ES DUEÑO, SE REGISTRA
+		// 1. IDENTIFICAR SI ES DUEÃ‘O DEL COMENTARIO (SI ES DUEÃ‘O, NO SE REGISTRA)
+		// 2. SI NO ES DUEÃ‘O, SE REGISTRA
 		List<NewsComment> listNewsComments = ncService.findByNewsId(id); // LISTA DE COMENTARIOS DE UNA NOTICIA
 
 		for (int i = 0; i < listNewsComments.size(); i++) {
 
-			if (uncService.identifyCommentAuthor(idUser, listNewsComments.get(i).getIdNewsComment()) > 0) { // ES DUEÑO
+			if (uncService.identifyCommentAuthor(idUser, listNewsComments.get(i).getIdNewsComment()) > 0) { // ES DUEÃ‘O
 				// NO SE HACE NADA
-			} else { // SI NO ES DUEÑO, SE VERIFICA SI EXISTE PARA REGISTRAR
+			} else { // SI NO ES DUEÃ‘O, SE VERIFICA SI EXISTE PARA REGISTRAR
 				if (uncService.identifyCommentNonAuthor(idUser, listNewsComments.get(i).getIdNewsComment()) > 0) { // EXISTE
 					// NO SE HACE NADA
 				} else {// NO EXISTE --> SE REGISTRA
@@ -285,7 +285,7 @@ public class NewsController {
 
 				Optional<Reaction> objReaction = rService.findById(3);
 				if (objReaction.isPresent())
-					objReaction.ifPresent(o -> objUserNewsComment.setReaction(o)); // (3) ESTÁ LLENO
+					objReaction.ifPresent(o -> objUserNewsComment.setReaction(o)); // (3) ESTÃ� LLENO
 				boolean flag1 = uncService.save(objUserNewsComment); // REGISTRAMOS OBJETO UserNewsComment
 
 				Optional<News> news = mService.findById(idNews);

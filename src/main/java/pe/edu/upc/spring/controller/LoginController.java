@@ -57,7 +57,7 @@ public class LoginController {
 		}
 		else {
 			objUser.setEnabled(true);
-			//AÃ‘ADIREMOS ROLES
+			//AÑADIREMOS ROLES
 			List<Role>roles = new ArrayList<Role>();
 			Role role = new Role();
 			role.setAuthority("ROLE_USER");
