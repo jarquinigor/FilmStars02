@@ -11,6 +11,9 @@ import pe.edu.upc.spring.model.Actor;
 
 @Repository
 public interface IActorRepository extends JpaRepository<Actor, Integer> {
-	@Query("from Actor a where a.nameActor like %:nameActor%")
+	@Query("from Actor a where LOWER(a.nameActor) like LOWER(concat('%',:nameActor,'%')) order by a.idActor ASC")
 	List<Actor> findByName(@Param("nameActor") String nameActor);
+	
+	@Query("select count(a.nameActor) from Actor a where a.nameActor = :nameActor")
+	public int findActor(@Param("nameActor") String nameActor);
 }

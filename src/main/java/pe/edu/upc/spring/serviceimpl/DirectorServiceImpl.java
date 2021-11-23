@@ -20,12 +20,12 @@ public class DirectorServiceImpl implements IDirectorService {
 
 	@Override
 	@Transactional
-	public boolean save(Director director) {
-		Director objDirector = dDirector.save(director);
-		if (objDirector == null)
-			return false;
-		else
-			return true;
+	public int save(Director director) {
+		int rpta = dDirector.findDirector(director.getNameDirector());
+		if (rpta == 0) {
+			dDirector.save(director);
+		}
+		return rpta;
 	}
 
 	@Override
@@ -36,13 +36,13 @@ public class DirectorServiceImpl implements IDirectorService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Director> findAll() {
-		return dDirector.findAll();
+	public List<Director> findAllSortNameAsc() {
+		return dDirector.findAll(Sort.by(Sort.Direction.ASC,"nameDirector"));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Director> findAllSortAsc() {
+	public List<Director> findAllSortIdAsc() {
 		return dDirector.findAll(Sort.by(Sort.Direction.ASC,"idDirector"));
 	}
 	

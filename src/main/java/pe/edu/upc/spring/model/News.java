@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,25 +25,30 @@ public class News implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idNews;
 
-	@Column(name="titleNews", nullable=false, length=80)
+	@NotEmpty(message = "Debe ingresar un título para la noticia")
+	@Column(name="titleNews", nullable=false, length=100)
 	private String titleNews;
 	
-	@Column(name="subtitleNews", nullable=false, length=100)
+	@NotEmpty(message = "Debe ingresar un subtítulo para la noticia")
+	@Column(name="subtitleNews", nullable=false, length=200)
 	private String subtitleNews;
 	
-	@Column(name="textNews", nullable=false, length=800)
+	@NotEmpty(message = "Debe ingresar el contenido de la noticia")
+	@Column(name="textNews", nullable=false, length=1200) //800
 	private String textNews;
 	
+	@NotEmpty(message = "Debe ingresar una imagen para la noticia")
 	@Column(name="imgNews", nullable=false, length=200)
 	private String imgNews;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="dateNews")
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern="d MMM, yyyy") 
 	private Date dateNews;
 
 	public News() {
 		super();
+		dateNews = new Date();
 	}
 
 	public News(int idNews, String titleNews, String subtitleNews, String textNews, String imgNews, Date dateNews) {

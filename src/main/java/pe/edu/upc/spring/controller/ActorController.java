@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,36 +27,30 @@ public class ActorController {
 	@Autowired
 	private IActorService aService;
 	
-	@RequestMapping("/bienvenido")
-	public String goWelcomePage() {
-		return "welcome"; 
-	}
-	
-	@RequestMapping("/") //NO LO USAMOS
-	public String goActorsListPage(Map<String, Object> model) {
-		model.put("listActors", aService.findAll());
-		return "listActor"; 
-	}
-	
-	@RequestMapping("/irRegistrar") //NO LO USAMOS
-	public String goRegisterPage(Model model) { 
-		model.addAttribute("actor", new Actor()); 
-		return "actor"; 
-	}
-	
 	@RequestMapping("/registrar")
-	public String register(@ModelAttribute("actor") Actor objActor, BindingResult binRes, Model model) 
-		throws ParseException
+	public String register(@Valid @ModelAttribute("actor") Actor actor, BindingResult binRes, Model model) 
+		throws Exception
 	{
-		if (binRes.hasErrors())
-			return "actor";
+		if (binRes.hasErrors()){
+			model.addAttribute("listActors", aService.findAllSortIdAsc());
+			model.addAttribute("actorbusqueda", new Actor()); 
+			return "listActor";
+		}	
 		else {
-			boolean flag = aService.save(objActor);
-			if(flag)
-				return "redirect:/actor/listar";
+			int rpta = aService.save(actor);
+			if(rpta > 0) {
+				model.addAttribute("mensaje", "Ya existe este actor");
+				model.addAttribute("listActors", aService.findAllSortIdAsc());
+				model.addAttribute("actor",new Actor());
+				model.addAttribute("actorbusqueda", new Actor()); 
+				return "listActor";
+			}		
 			else {
-				model.addAttribute("mensaje", "Ocurrio un rochezaso, LUZ ROJA");
-				return "redirect:/actor/irRegistrar";
+				model.addAttribute("mensaje", "Se registro un actor correctamente");
+				model.addAttribute("listActors", aService.findAllSortIdAsc());
+				model.addAttribute("actor",new Actor());
+				model.addAttribute("actorbusqueda", new Actor()); 
+				return "listActor";
 			}
 		}
 	}
@@ -71,7 +67,7 @@ public class ActorController {
 		else {
 			model.addAttribute("actor", objActor);
 			model.addAttribute("actorbusqueda", new Actor());
-			model.addAttribute("listActors",aService.findAllSortAsc());
+			model.addAttribute("listActors",aService.findAllSortIdAsc());
 			return "listActor";                   
 		}
 	}
@@ -83,19 +79,21 @@ public class ActorController {
 				aService.delete(id);
 				model.put("actor",new Actor()); //importante
 				model.put("actorbusqueda", new Actor()); //importante
-				model.put("listActors", aService.findAllSortAsc());
+				model.put("listActors", aService.findAllSortIdAsc());
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
-			model.put("listActors", aService.findAll());
+			model.put("listActors", aService.findAllSortIdAsc());
+			model.put("actor", new Actor());
+			model.put("actorbusqueda", new Actor());
 		}
 		return "listActor";
 	}
 	
 	@RequestMapping("/listar")
 	public String list(Map<String, Object> model) {
-		model.put("listActors", aService.findAllSortAsc());
+		model.put("listActors", aService.findAllSortIdAsc());
 		model.put("actor",new Actor());
 		model.put("actorbusqueda", new Actor()); 
 		return "listActor";

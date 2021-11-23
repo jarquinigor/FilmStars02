@@ -20,12 +20,12 @@ public class GenreServiceImpl implements IGenreService {
 
 	@Override
 	@Transactional
-	public boolean save(Genre genre) {
-		Genre objGenre = dGenre.save(genre);
-		if (objGenre == null)
-			return false;
-		else
-			return true;
+	public int save(Genre genre) {
+		int rpta = dGenre.findGenre(genre.getNameGenre());
+		if (rpta == 0){
+			dGenre.save(genre);
+		}
+		return rpta;
 	}
 
 	@Override
@@ -36,13 +36,13 @@ public class GenreServiceImpl implements IGenreService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Genre> findAll() {
-		return dGenre.findAll();
+	public List<Genre> findAllSortNameAsc() {
+		return dGenre.findAll(Sort.by(Sort.Direction.ASC,"nameGenre"));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Genre> findAllSortAsc() {
+	public List<Genre> findAllSortIdAsc() {
 		return dGenre.findAll(Sort.by(Sort.Direction.ASC,"idGenre"));
 	}
 	

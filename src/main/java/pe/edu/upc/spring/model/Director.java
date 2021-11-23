@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Director")
@@ -19,6 +20,7 @@ public class Director implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idDirector;
 
+	@NotEmpty(message = "Debe ingresar un nombre de director")
 	@Column(name = "nameDirector", length = 60, nullable = false)
 	private String nameDirector;
 

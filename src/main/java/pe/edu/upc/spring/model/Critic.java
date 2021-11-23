@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Critic")
@@ -18,7 +19,8 @@ public class Critic implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idCritic;
-
+	
+	@NotEmpty(message = "Debe ingresar un nombre de crítico")
 	@Column(name = "nameCritic", length = 60, nullable = false)
 	private String nameCritic;
 

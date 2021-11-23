@@ -6,10 +6,10 @@ import java.util.Optional;
 import pe.edu.upc.spring.model.Actor;
 
 public interface IActorService {
-	public boolean save(Actor race);
+	public int save(Actor race);
 	public void delete(int idRace);
-	public List<Actor> findAll();
-	public List<Actor> findAllSortAsc();
+	public List<Actor> findAllSortNameAsc();
+	public List<Actor> findAllSortIdAsc();
 	public Optional<Actor>findById(int idActor);
 	public List<Actor> findByName(String nameRace);
 }

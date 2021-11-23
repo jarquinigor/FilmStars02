@@ -36,13 +36,19 @@ public class NewsServiceImpl implements INewsService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<News> findAll() {
+	public List<News> findAllSortNameAsc() {
 		return dNews.findAll();
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<News> findAllSortAsc() {
+	public List<News> findAllSortIdDesc() {
+		return dNews.findAll(Sort.by(Sort.Direction.DESC,"idNews"));
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<News> findAllSortIdAsc() {
 		return dNews.findAll(Sort.by(Sort.Direction.ASC,"idNews"));
 	}
 	

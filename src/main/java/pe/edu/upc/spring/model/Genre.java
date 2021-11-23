@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Genre")
@@ -19,6 +20,7 @@ public class Genre implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idGenre;
 
+	@NotEmpty(message = "Debe ingresar un nombre de género de película")
 	@Column(name = "nameGenre", length = 30, nullable = false)
 	private String nameGenre;
 

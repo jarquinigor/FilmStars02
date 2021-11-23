@@ -11,6 +11,6 @@ import pe.edu.upc.spring.model.News;
 
 @Repository
 public interface INewsRepository extends JpaRepository<News, Integer> {
-	@Query("from News n where n.titleNews like %:titleNews%")
+	@Query("from News n where LOWER(n.titleNews) like LOWER(concat('%',:titleNews,'%')) order by n.idNews ASC")
 	List<News> findByName(@Param("titleNews") String titleNews);
 }

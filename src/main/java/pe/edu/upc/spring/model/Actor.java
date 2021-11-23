@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Actor")
@@ -19,10 +20,12 @@ public class Actor implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idActor;
 
+	@NotEmpty(message = "Debe ingresar un nombre de actor")
 	@Column(name = "nameActor", length = 60, nullable = false)
 	private String nameActor;
 	
-	@Column(name="imgActor", length=200, nullable=false)
+	@NotEmpty(message = "Debe ingresar una imagen de actor")
+	@Column(name = "imgActor", length = 200, nullable = false)
 	private String imgActor;
 
 	public Actor() {
