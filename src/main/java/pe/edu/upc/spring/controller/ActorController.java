@@ -40,6 +40,7 @@ public class ActorController {
 			if(path == 1) {
 				int rpta = aService.save(actor);
 				if(rpta > 0) {
+					model.addAttribute("path", 1);
 					model.addAttribute("mensaje", "Ya existe este actor");
 					model.addAttribute("listActors", aService.findAllSortIdAsc());
 					model.addAttribute("actor",new Actor());
@@ -47,6 +48,7 @@ public class ActorController {
 					return "listActor";
 				}		
 				else {
+					model.addAttribute("path", 1);
 					model.addAttribute("mensaje", "Se registro un actor correctamente");
 					model.addAttribute("listActors", aService.findAllSortIdAsc());
 					model.addAttribute("actor",new Actor());
@@ -56,6 +58,7 @@ public class ActorController {
 			}
 			else {
 				aService.update(actor);
+				model.addAttribute("path", 1);
 				model.addAttribute("mensaje", "Se actualizó un actor correctamente");
 				model.addAttribute("listActors", aService.findAllSortIdAsc());
 				model.addAttribute("actor",new Actor());
@@ -79,6 +82,7 @@ public class ActorController {
 			model.addAttribute("actor", objActor);
 			model.addAttribute("actorbusqueda", new Actor());
 			model.addAttribute("listActors",aService.findAllSortIdAsc());
+			model.addAttribute("path", 2);
 			return "listActor";                   
 		}
 	}
@@ -104,6 +108,7 @@ public class ActorController {
 	
 	@RequestMapping("/listar")
 	public String list(Map<String, Object> model) {
+		model.put("path", 1);
 		model.put("listActors", aService.findAllSortIdAsc());
 		model.put("actor",new Actor());
 		model.put("actorbusqueda", new Actor()); 
