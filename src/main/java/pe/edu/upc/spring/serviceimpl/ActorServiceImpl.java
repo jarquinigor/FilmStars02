@@ -27,7 +27,13 @@ public class ActorServiceImpl implements IActorService {
 		}
 		return rpta;
 	}
-
+	
+	@Override
+	@Transactional
+	public void update(Actor race) {
+		dActor.save(race);
+	}
+	
 	@Override
 	@Transactional
 	public void delete(int idActor) {

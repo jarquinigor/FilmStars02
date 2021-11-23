@@ -28,7 +28,7 @@ public class ActorController {
 	private IActorService aService;
 	
 	@RequestMapping("/registrar")
-	public String register(@Valid @ModelAttribute("actor") Actor actor, BindingResult binRes, Model model) 
+	public String register(@Valid @ModelAttribute("actor") Actor actor, @RequestParam("path") Integer path,BindingResult binRes, Model model) 
 		throws Exception
 	{
 		if (binRes.hasErrors()){
@@ -37,21 +37,32 @@ public class ActorController {
 			return "listActor";
 		}	
 		else {
-			int rpta = aService.save(actor);
-			if(rpta > 0) {
-				model.addAttribute("mensaje", "Ya existe este actor");
-				model.addAttribute("listActors", aService.findAllSortIdAsc());
-				model.addAttribute("actor",new Actor());
-				model.addAttribute("actorbusqueda", new Actor()); 
-				return "listActor";
-			}		
+			if(path == 1) {
+				int rpta = aService.save(actor);
+				if(rpta > 0) {
+					model.addAttribute("mensaje", "Ya existe este actor");
+					model.addAttribute("listActors", aService.findAllSortIdAsc());
+					model.addAttribute("actor",new Actor());
+					model.addAttribute("actorbusqueda", new Actor()); 
+					return "listActor";
+				}		
+				else {
+					model.addAttribute("mensaje", "Se registro un actor correctamente");
+					model.addAttribute("listActors", aService.findAllSortIdAsc());
+					model.addAttribute("actor",new Actor());
+					model.addAttribute("actorbusqueda", new Actor()); 
+					return "listActor";
+				}
+			}
 			else {
-				model.addAttribute("mensaje", "Se registro un actor correctamente");
+				aService.update(actor);
+				model.addAttribute("mensaje", "Se actualizó un actor correctamente");
 				model.addAttribute("listActors", aService.findAllSortIdAsc());
 				model.addAttribute("actor",new Actor());
 				model.addAttribute("actorbusqueda", new Actor()); 
 				return "listActor";
 			}
+			
 		}
 	}
 	

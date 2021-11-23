@@ -226,7 +226,7 @@ public class NewsController {
 			}
 		}
 
-		model.addAttribute("listUserNewsComments", listUserNewsComment); // LISTA DE COMENTAR
+		model.addAttribute("listUserNewsComments", listUserNewsComment); // LISTA DE COMENTARIOS
 		model.addAttribute("newsComment", new NewsComment());
 
 		return "newsUser";
